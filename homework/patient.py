@@ -2,10 +2,7 @@ import csv
 import os
 from homework.Descriptor import *
 import logging
-from homework.config import CSV_PATH
-
-
-# from homework.Log import patinfo, paterr, collectinfo, collecterr
+# from homework.config import CSV_PATH
 
 
 class Patient:
@@ -69,10 +66,16 @@ class Patient:
     def save(self):
         if not self.created:
             self.paterr.warning("User is NONE, so it wasn't saved.")
+        filename = "PatienList.csv"
+        try:
+            with open(filename, "a", newline="", encoding='utf-8') as file:
+                writer = csv.writer(file)
+        except:
+            raise AttributeError("Can't open csv file")
+
         try:
             data = [self.first_name, self.last_name, self.birth_date, self.phone, self.document_type, self.document_id]
-            filename = "PatienList.csv"
-            # filename = CSV_PATH
+             # filename = CSV_PATH
             with open(filename, "a", newline="", encoding='utf-8') as file:
                 writer = csv.writer(file)
                 writer.writerow(data)
@@ -88,6 +91,9 @@ class Patient:
             [self.first_name, self.last_name, self.birth_date, self.phone, self.document_type, self.document_id])
         # self.patinfo.info(data)
         return data
+
+    def is_created(self):
+        return self.created
 
 
 class PatientCollection:
