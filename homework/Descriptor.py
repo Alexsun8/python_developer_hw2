@@ -11,7 +11,7 @@ class   Name:
             instance.paterr.error('Invalid name.')
             instance.paterr.error("Error. User was not created.")
             raise TypeError("not str")
-        elif instance.created:
+        elif instance.is_created():
             instance.paterr.error("You can't change name")
             instance.paterr.error("Error. User was not created.")
             raise AttributeError("can't change name")
@@ -47,7 +47,7 @@ class Phone:
         number = prov
         instance.__dict__[self.name] = number
         instance.patinfo.debug(["number is okey: ", number])
-        if instance.created:
+        if instance.is_created():
             instance.patinfo.info(["number is okey: ", number])
 
     def __set_name__(self, owner, name):
@@ -70,7 +70,7 @@ class DocType():
             raise ValueError("doctype error")
         instance.__dict__[self.name] = prov
         instance.patinfo.debug(["Doc type is okey:", prov])
-        if instance.created:
+        if instance.is_created():
             instance.patinfo.info(["Dov type is okey: ", prov])
 
     def __set_name__(self, owner, name):
@@ -94,7 +94,7 @@ class DocId:
             raise ValueError("docid error")
         instance.__dict__[self.name] = prov
         instance.patinfo.debug(["Doc id okey: ", prov])
-        if instance.created:
+        if instance.is_created():
             instance.patinfo.info(["Doc id is okey: ", prov])
 
     def __set_name__(self, owner, name):
@@ -116,11 +116,10 @@ class Date:
             instance.paterr.error('Invalid date. year-month-day')
             instance.paterr.error("Error. User was not created.")
             raise ValueError("date error")
-        date = prov
-        instance.__dict__[self.name] = date
-        instance.patinfo.debug(["Date is okey: ", date])
-        if instance.created:
-            instance.patinfo.info(["Date is okey: ", date])
+        instance.__dict__[self.name] = prov
+        instance.patinfo.debug(["Date is okey: ", prov])
+        if instance.is_created():
+            instance.patinfo.info(["Date is okey: ", prov])
 
     def __set_name__(self, owner, name):
         self.name = name

@@ -1,39 +1,16 @@
 from copy import deepcopy
 from re import fullmatch, sub, search
+from datetime import date as dt
+
+
 # from homework.Log import validerr
 
 def nameReal(name_):
     pattern = "[0-9]"
     name = sub(pattern, "", name_)
-    if len(name)==0:
-        return False
+    if len(name) == 0:
+        return None
     return name
-
-
-
-def dateIsReal(date):
-    year = int(date[:4])
-    if year < 1900 or year > 2020:
-        # validerr.paterr.warning(["It should be: 1900<year<=2020. Your year: ", year])
-        return False
-
-    month = int(date[5:7])
-    if month < 0 or month > 12:
-        # validerr.paterr.warning(["It should be: 0<month<=12. Your month: ", month])
-        return False
-
-    day = int(date[8:])
-    if day < 1 or day > 31:
-        # validerr.paterr.warning(["It should be: 0<day<32. Your day: ", day])
-        return False
-
-    if month == 2 and day > 29:
-        # validerr.paterr.warning("In Feb only 28 or 29 days")
-        return False
-
-    if month == 2 and day == 29:
-        print("WOW!")
-    return date
 
 
 def dateIsValid(date):
@@ -41,45 +18,45 @@ def dateIsValid(date):
     pattern2 = "\d{2}.\d{2}.\d{4}"  # d-m-y
     match1 = fullmatch(pattern1, date)
     match2 = fullmatch(pattern2, date)
+
     if match1:
-        return dateIsReal(date)
+        try:
+            d = str(dt(int(date[:4]), int(date[5:7]), int(date[8:])))
+        except:
+            return None
     elif match2:
-        dateNew = deepcopy(date[len(date) - 4:])
-        dateNew = '-'.join([dateNew, date[len(date) - 7:len(date) - 5]])
-        dateNew = '-'.join([dateNew, date[:2]])
-        if dateIsReal(dateNew):
-            return dateNew
-        else:
-            return False
+        try:
+            d = dt(int(date[8:]), int(date[5:7]), int(date[:4]))
+        except:
+            return None
     else:
-        return False
+        return None
+    return d
 
-# print(dateIsReal("1978-01-05"))
 
-def phoneIsValid( phone_):
+def phoneIsValid(phone_):
     pattern = "[^+,0,1,2,3,4,5,6,7,8,9]"
     phone = sub(pattern, "", phone_)
-    if len(phone)<10:
-        return False
-    if phone[0] == '8' or phone[0]=='7':
+    if len(phone) < 10:
+        return None
+    if phone[0] == '8' or phone[0] == '7':
         phone = ''.join(['+7', phone[1:]])
     elif not phone[0] == '+' or not phone[1] == '7':
         # validerr.paterr.warning(["Only Russians numbers are valid. +7-xxx-xxx-xx-xx or 8-xxx-xxx-xx-xx. Your num: ", phone])
-        return False
+        return None
 
     if not len(phone) == 12:
         # validerr.paterr.warning(["Only Russians numbers are valid. len !=12  . Your num: ", phone])
-        return False
+        return None
     if not (phone[2:5] == '495' or phone[2:5] == '499' or phone[2] == '9'):
         # validerr.paterr.warning(["Only Russians numbers are valid. +7-499-... or +7-495-... or +7-9..-.... Your num: ", phone])
-        return False
+        return None
     return phone
-
 
 
 def docTypeIsValid(doc_type):
     if not isinstance(doc_type, str):
-        return False
+        return None
     doc_type = doc_type.lower()
 
     passport = "паспорт"
@@ -99,7 +76,7 @@ def docTypeIsValid(doc_type):
                                                                                                      doc_type):
         return "права"
 
-    return False
+    return None
 
 
 def docIdIsValid(id, type=None):
@@ -110,9 +87,9 @@ def docIdIsValid(id, type=None):
             return id
         else:
             # validerr.paterr.warning(["Zpass - len ==9. In dr and pass-10. Your type: ", type, ". Your id: ", id])
-            return False
+            return None
     elif len(id) == 9 and (type == "загран" or not type):
         # validerr.paterr.warning(["Zpass - len ==9. In dr and pass-10. Your type: ", type, ". Your id: ", id])
         return id
     else:
-        return False
+        return None
