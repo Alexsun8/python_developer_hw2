@@ -1,5 +1,5 @@
-GOOD_LOG_FILE = "/home/alexsun8/kib/ДЗ2/python_developer_hw2/homework/Good_Logs.txt"
-ERROR_LOG_FILE = "/home/alexsun8/kib/ДЗ2/python_developer_hw2/homework/Bad_Logs.txt"
+GOOD_LOG_FILE = "/home/alexsun8/kib/python_developer_hw2/homework/Good_Logs.txt"
+ERROR_LOG_FILE = "/home/alexsun8/kib/python_developer_hw2/homework/Bad_Logs.txt"
 CSV_PATH = "PatienList.csv"
 PHONE_FORMAT = "+79160000000"  # Здесь запишите телефон +7-916-000-00-00 в том формате, в котором вы храните телефоны
 
